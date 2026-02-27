@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from fastapi.exceptions import HTTPException
 from fastapi import UploadFile, File
+from app.oauth2 import get_current_user
 import os
 import uuid
 import shutil
@@ -13,7 +14,8 @@ from app.schemas import PostCreate
 
 router = APIRouter(
     prefix="/posts",
-    tags=["Posts"]
+    tags=["Posts"],
+    dependencies=[Depends(get_current_user)]
 )
 
 @router.post("/")
